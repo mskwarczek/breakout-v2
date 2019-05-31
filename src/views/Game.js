@@ -1,15 +1,35 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+//import { NavLink } from 'react-router-dom';
 
-import { getWindowSize } from '../common/tools';
+import Breakout from '../game/Breakout';
+import { setPlayerScore } from '../common/reducers/appStateActions.js';
 
-const Game = () => {
-    return (
-        <div>
-            <canvas id="canvas" width={getWindowSize().width} height={getWindowSize().height} />
-            <NavLink to='/'><div>Back</div></NavLink>
-        </div>
-    );
+const mapStateToProps = state => ({
+    player: state.appStateReducer
+});
+
+const mapDispatchToProps = dispatch => ({
+    setPlayerScore: (playerTopLevel, playerScore) => dispatch(setPlayerScore(playerTopLevel, playerScore))
+});
+
+class Game extends React.Component {
+
+    goToGameover = (level, score) => {
+        this.props.setPlayerScore(level, score);
+        this.props.history.push('/gameover');
+    };
+
+    render() {
+        return (
+            <div className='game-container'>
+                <Breakout goToGameover={this.goToGameover} />
+                <div className='game-buttons'>
+                    <button>Start / Pause</button>
+                </div>
+            </div>
+        );
+    };
 };
 
-export default Game;
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

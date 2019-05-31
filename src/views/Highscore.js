@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { generateUID } from '../common/tools';
 
 const mapStateToProps = state => ({
-    appState: state.appStateReducer
+    player: state.appStateReducer
 });
 
 class Highscore extends React.Component {
@@ -15,8 +15,8 @@ class Highscore extends React.Component {
             error: null,
             isLoaded: false,
             list: [],
-            playerName: props.appState.playerName || null,
-            playerScore: null
+            playerName: props.player.playerName || null,
+            playerScore: props.player.playerScore || null
         };
     };
 

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { setPlayerName } from '../common/reducers/appStateActions.js';
 
 const mapStateToProps = state => ({
-    playerName: state.appStateReducer
+    player: state.appStateReducer
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -33,6 +33,7 @@ class Gameover extends React.Component {
     };
 
     render() {
+        const { playerTopLevel, playerScore } = this.props.player;
         return (
             <div>
                 <div className='header'>
@@ -40,6 +41,7 @@ class Gameover extends React.Component {
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <div className='content'>
+                        <p>Yo made it to {playerTopLevel} level and gained {playerScore} points!</p><br />
                         <label>Your name:<br />
                         <input name='playerName'
                             type='text'
