@@ -48,10 +48,11 @@ server.put('/api/highscore', (req, res) => {
                 newData.sort((a, b) => b.score - a.score);
                 newData.pop();
                 data = newData;
-                console.log(newData);
                 writeHighscore(JSON.stringify(data))
                     .then(() => res.sendFile(path.join(__dirname, 'data/highscore.json')))
                     .catch(error => console.log(error));
+            } else {
+                res.sendFile(path.join(__dirname, 'data/highscore.json'));
             };
         })
         .catch(error => console.log(error));

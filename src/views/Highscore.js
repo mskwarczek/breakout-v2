@@ -1,20 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class Highscore extends Component {
+import { generateUID } from '../common/tools';
+
+const mapStateToProps = state => ({
+    appState: state.appStateReducer
+});
+
+class Highscore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
             isLoaded: false,
             list: [],
-            playerName: null,
+            playerName: props.appState.playerName || null,
             playerScore: null
         };
     };
 
     componentDidMount() {
-        this.state.playerName
+        this.state.playerName && this.state.playerScore
             ? this.addPlayerToHighscore()
             : this.getHighscore();
     };
@@ -43,7 +50,7 @@ class Highscore extends Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: 100, name: playerName, score: playerScore })})
+            body: JSON.stringify({ id: generateUID(), name: playerName, score: playerScore })})
             .then(res => res.json())
             .then((result) => {
                 this.setState({
@@ -60,7 +67,7 @@ class Highscore extends Component {
     };
 
     render() {
-        const { error, isLoaded, list } = this.state;
+        const { error, isLoaded, list, playerName } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -68,14 +75,23 @@ class Highscore extends Component {
         } else {
             return (
                 <div>
-                    Highscore View
-                    {list.map(item =>
-                        <div key={item.id}>
-                            {item.name}
-                            {item.score}
-                        </div>
-                    )}
-                    <NavLink to='/'><div>Back</div></NavLink>
+                    <div className='header'>
+                        <h2>Highscores</h2>
+                    </div>
+                    <div className='content'>
+                        { list.map(item =>
+                            <div key={item.id}>
+                                <p>{item.name} {item.score}</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className='buttons'>
+                        { playerName
+                            ? <NavLink to='/game'><h3>Play again</h3></NavLink>
+                            : null
+                        }
+                        <NavLink to='/'><h4>Back to Menu</h4></NavLink>
+                    </div>
                 </div>
             );
             ;
@@ -83,4 +99,4 @@ class Highscore extends Component {
     };
 };
 
-export default Highscore;
+export default connect(mapStateToProps)(Highscore);
