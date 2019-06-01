@@ -1,6 +1,6 @@
-import { getWindowSize } from '../common/tools';
+import { getHigherDimension } from '../common/tools';
 
-export const modX = getWindowSize().width / 1300;
+export const modX = getHigherDimension() / 1300;
 
 export const CONFIG = {
     basePaddleWidth: 80 * modX,

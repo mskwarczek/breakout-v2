@@ -19,25 +19,36 @@ export default class Breakout extends React.Component {
         const CTX = CANVAS.getContext('2d');
         const FIELD_X = CANVAS.width;
         const FIELD_Y = CANVAS.height;
-        this.run(CTX, FIELD_X, FIELD_Y);
+        let gameMode = this.props.gameMode === 'normal'
+            ? 1
+            : 2;
+        this.run(CTX, FIELD_X, FIELD_Y, gameMode);
     };
 
-    run(CTX, FIELD_X, FIELD_Y) {
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.keyDownHandler, false);
+        document.removeEventListener('keyup', this.keyUpHandler, false);
+        document.removeEventListener('touchstart', this.touchStartHandler, false);
+        document.removeEventListener('touchend', this.touchEndHandler, false);
+    };
+
+    run(CTX, FIELD_X, FIELD_Y, gameMode) {
         this.c  = {
             CTX,
             FIELD_X,
             FIELD_Y,
+            gameMode,
             field: new Field(CTX, FIELD_X, FIELD_Y, PALETTE.baseFieldFillStyle),
             wall: new Wall(CTX, FIELD_X, modX),
-            paddle: new Paddle(CTX, FIELD_X, FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle),
-            balls: [new Ball(CTX, FIELD_X, FIELD_Y, modX, CONFIG.baseBallSize, CONFIG.baseBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)],
+            paddle: new Paddle(CTX, FIELD_X, FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed * gameMode, PALETTE.basePaddleFillStyle),
+            balls: [new Ball(CTX, FIELD_X, FIELD_Y, modX, CONFIG.baseBallSize, CONFIG.baseBallSpeed * gameMode, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)],
             bonus: [],
             level: CONFIG.baseLevel,
             lives: CONFIG.baseLives,
             score: CONFIG.baseScore,
-            multiplier: CONFIG.baseMultiplier,
-            levelBallSpeed: CONFIG.baseBallSpeed,
-            levelMultiplier: CONFIG.baseMultiplier,
+            multiplier: CONFIG.baseMultiplier * gameMode * gameMode,
+            levelBallSpeed: CONFIG.baseBallSpeed * gameMode,
+            levelMultiplier: CONFIG.baseMultiplier  * gameMode * gameMode,
             alertText: '',
             alertColor: PALETTE.baseAlertFillStyle,
             pause: true
@@ -251,9 +262,9 @@ export default class Breakout extends React.Component {
 
         this.c.wall.lines.forEach(line => line.calculateStrength());
         if (this.c.wall.calculateStrength() === 0) {
-            this.c.levelBallSpeed = CONFIG.baseBallSpeed + (this.c.level * CONFIG.ballSpeedIncrease);
-            this.c.levelMultiplier = CONFIG.baseMultiplier + (this.c.level * CONFIG.multiplierIncrease)
-            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
+            this.c.levelBallSpeed = (CONFIG.baseBallSpeed * this.c.gameMode) + (this.c.level * CONFIG.ballSpeedIncrease);
+            this.c.levelMultiplier = (CONFIG.baseMultiplier * this.c.gameMode * this.c.gameMode) + (this.c.level * CONFIG.multiplierIncrease)
+            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed * this.c.gameMode, PALETTE.basePaddleFillStyle);
             this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
             this.c.wall = new Wall(this.c.CTX, this.c.FIELD_X, modX);
             this.c.score += this.c.level * 1000;
@@ -266,7 +277,7 @@ export default class Breakout extends React.Component {
         };
 
         if (this.c.balls.length === 0) {
-            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
+            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed * this.c.gameMode, PALETTE.basePaddleFillStyle);
             this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
             this.c.multiplier = this.c.levelMultiplier;
             this.c.lives -= 1;

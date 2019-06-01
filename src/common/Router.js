@@ -7,6 +7,7 @@ import Game from '../views/Game';
 import Gameover from '../views/Gameover';
 import Highscore from '../views/Highscore';
 import Options from '../views/Options';
+import Author from '../views/Author';
 
 const Router = () => {
     return (
@@ -17,6 +18,7 @@ const Router = () => {
             <Route exact path='/gameover' component={Gameover} />
             <Route exact path='/highscore' component={Highscore} />
             <Route exact path='/options' component={Options} />
+            <Route exact path='/author' component={Author} />
         </Switch>
     );
 };

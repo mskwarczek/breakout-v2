@@ -14,4 +14,10 @@ export const getWindowSize = () => {
     let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     return {width, height};
-}
+};
+
+export const getHigherDimension = () => {
+    return getWindowSize().width > getWindowSize().height
+        ? getWindowSize().width
+        : getWindowSize().height;
+};

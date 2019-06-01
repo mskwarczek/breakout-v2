@@ -43,7 +43,8 @@ class Gameover extends React.Component {
                     <div className='content'>
                         <p>Yo made it to {playerTopLevel} level and gained {playerScore} points!</p><br />
                         <label>Your name:<br />
-                        <input name='playerName'
+                        <input
+                            name='playerName'
                             type='text'
                             value={this.state.playerName}
                             onChange={this.handleChange}
@@ -51,7 +52,7 @@ class Gameover extends React.Component {
                         </label><br />
                     </div>
                     <div className='buttons'>
-                        <button type='submit'><h3 type='submit'>Continue</h3></button>
+                        <button type='submit'><h3>Continue</h3></button>
                     </div>
                 </form>
             </div>
