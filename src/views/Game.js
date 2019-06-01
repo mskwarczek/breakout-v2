@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import { NavLink } from 'react-router-dom';
 
 import Breakout from '../game/Breakout';
+import { getWindowSize } from '../common/tools';
 import { setPlayerScore } from '../common/reducers/appStateActions.js';
 
 const mapStateToProps = state => ({
@@ -15,18 +15,25 @@ const mapDispatchToProps = dispatch => ({
 
 class Game extends React.Component {
 
+    componentDidMount() {
+        window.addEventListener('resize', this.resizeHandler, false);
+    }
+
     goToGameover = (level, score) => {
         this.props.setPlayerScore(level, score);
         this.props.history.push('/gameover');
+    };
+
+    resizeHandler = () => {
+        if (getWindowSize().width < getWindowSize().height) {
+            alert('It is highly recommended to play Breakout in landscape mode. Turn to landscape mode and refresh the page.');
+        };
     };
 
     render() {
         return (
             <div className='game-container'>
                 <Breakout goToGameover={this.goToGameover} />
-                <div className='game-buttons'>
-                    <button>Start / Pause</button>
-                </div>
             </div>
         );
     };

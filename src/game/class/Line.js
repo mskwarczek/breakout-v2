@@ -1,13 +1,13 @@
 import Brick from './Brick';
 
 export default class Line {
-    constructor(CTX, FIELD_X, positionY, brickHeight) {
+    constructor(CTX, FIELD_X, modX, positionY, brickHeight) {
         this.CTX = CTX;
         this.FIELD_X = FIELD_X;
         this.positionY = positionY;
-        this.padding = Math.floor((Math.random() * 3 ) + 1) * 5;
+        this.padding = Math.floor((Math.random() * 3 ) + 1) * 5 * modX;
         this.brickData = {
-            width: Math.floor((Math.random() * 4 ) + 2) * 20,
+            width: Math.floor((Math.random() * 4 ) + 2) * 20 * modX,
             height: brickHeight,
             type: Math.floor((Math.random() * 10 ) + 1)
         };

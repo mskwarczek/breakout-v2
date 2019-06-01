@@ -1,14 +1,14 @@
 import { PALETTE }  from '../Global';
 
 export default class Bonus {
-    constructor(CTX, positionX, positionY) {
+    constructor(CTX, modX, positionX, positionY) {
         this.CTX = CTX;
         this.position = {
             x: positionX,
             y: positionY
         };
-        this.size = 15;
-        this.speed = 4;
+        this.size = 15 * modX;
+        this.speed = 4 * modX;
         this.numberOfTypes = 10;
         this.type = Math.floor((Math.random() * this.numberOfTypes) + 1);
         this.fillStyle = PALETTE.baseBonusFillStyle;

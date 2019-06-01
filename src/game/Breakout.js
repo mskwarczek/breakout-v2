@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getWindowSize } from '../common/tools';
-import { CONFIG, PALETTE } from './Global';
+import { CONFIG, PALETTE, modX } from './Global';
 import Field from './class/Field';
 import Paddle from './class/Paddle';
 import Ball from './class/Ball';
@@ -28,9 +28,9 @@ export default class Breakout extends React.Component {
             FIELD_X,
             FIELD_Y,
             field: new Field(CTX, FIELD_X, FIELD_Y, PALETTE.baseFieldFillStyle),
-            wall: new Wall(CTX, FIELD_X),
-            paddle: new Paddle(CTX, FIELD_X, FIELD_Y, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle),
-            balls: [new Ball(CTX, FIELD_X, FIELD_Y, CONFIG.baseBallSize, CONFIG.baseBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)],
+            wall: new Wall(CTX, FIELD_X, modX),
+            paddle: new Paddle(CTX, FIELD_X, FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle),
+            balls: [new Ball(CTX, FIELD_X, FIELD_Y, modX, CONFIG.baseBallSize, CONFIG.baseBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)],
             bonus: [],
             level: CONFIG.baseLevel,
             lives: CONFIG.baseLives,
@@ -61,6 +61,8 @@ export default class Breakout extends React.Component {
     addListeners = () => {
         document.addEventListener('keydown', this.keyDownHandler, false);
         document.addEventListener('keyup', this.keyUpHandler, false);
+        document.addEventListener('touchstart', this.touchStartHandler, false);
+        document.addEventListener('touchend', this.touchEndHandler, false);
     };
 
     keyDownHandler = (event) => {
@@ -89,6 +91,30 @@ export default class Breakout extends React.Component {
         else if (event.key === 'ArrowLeft' || event.key === 'Left') {
             this.c.paddle.isMoving.left = false;
         };
+    };
+
+    touchStartHandler = (event) => {
+        if (event.targetTouches.length === 2) {
+            if (this.c.pause === true) {
+                this.c.pause = false;
+                this.play();
+            }
+            else {
+                this.c.pause = true;
+                this.pause();
+            };
+        }
+        else if (event.targetTouches[0].pageX < this.c.FIELD_X / 2) {
+            this.c.paddle.isMoving.left = true;
+        }
+        else {
+            this.c.paddle.isMoving.right = true;
+        };
+    };
+
+    touchEndHandler = () => {
+        this.c.paddle.isMoving.left = false;
+        this.c.paddle.isMoving.right = false;
     };
 
     applyBonus = (type) => {
@@ -134,11 +160,11 @@ export default class Breakout extends React.Component {
             case 7:
                 this.c.balls.forEach(ball => {
                     ball.speed.dx = ball.speed.dx > 0
-                        ? this.c.levelBallSpeed - 1.5
-                        : -this.c.levelBallSpeed + 1.5;
+                        ? this.c.levelBallSpeed - 1.0
+                        : -this.c.levelBallSpeed + 1.0;
                     ball.speed.dy = ball.speed.dy > 0
-                        ? this.c.levelBallSpeed - 1.5
-                        : -this.c.levelBallSpeed + 1.5;
+                        ? this.c.levelBallSpeed - 1.0
+                        : -this.c.levelBallSpeed + 1.0;
                     ball.fillStyle = "darkblue";
                 });
                 this.c.alertText = 'Slow balls!';
@@ -153,8 +179,8 @@ export default class Breakout extends React.Component {
                 this.c.alertColor = PALETTE.positiveAlertFillStyle;
                 break;
             case 9:
-                this.c.balls.push(new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle, this.c.balls[0].position.x));
-                this.c.balls.push(new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle, this.c.paddle.position.x));
+                this.c.balls.push(new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle, this.c.balls[0].position.x));
+                this.c.balls.push(new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle, this.c.paddle.position.x));
                 this.c.alertText = 'Multiple balls!';
                 this.c.alertColor = PALETTE.positiveAlertFillStyle;
                 break;
@@ -202,7 +228,7 @@ export default class Breakout extends React.Component {
                     if (ball.collision(brick) === 'hit') {
                         this.c.score += brick.value * this.c.multiplier;
                         if (Math.floor(Math.random() * 10) < CONFIG.bonusDropRate) {
-                            this.c.bonus.push(new Bonus(this.c.CTX, ball.position.x, ball.position.y));
+                            this.c.bonus.push(new Bonus(this.c.CTX, modX, ball.position.x, ball.position.y));
                         };
                     };
                 });
@@ -227,9 +253,9 @@ export default class Breakout extends React.Component {
         if (this.c.wall.calculateStrength() === 0) {
             this.c.levelBallSpeed = CONFIG.baseBallSpeed + (this.c.level * CONFIG.ballSpeedIncrease);
             this.c.levelMultiplier = CONFIG.baseMultiplier + (this.c.level * CONFIG.multiplierIncrease)
-            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
-            this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
-            this.c.wall = new Wall(this.c.CTX, this.c.FIELD_X);
+            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
+            this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
+            this.c.wall = new Wall(this.c.CTX, this.c.FIELD_X, modX);
             this.c.score += this.c.level * 1000;
             this.c.level += 1;
             this.c.multiplier = this.c.levelMultiplier;
@@ -240,8 +266,8 @@ export default class Breakout extends React.Component {
         };
 
         if (this.c.balls.length === 0) {
-            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
-            this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
+            this.c.paddle = new Paddle(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.basePaddleWidth, CONFIG.basePaddleSpeed, PALETTE.basePaddleFillStyle);
+            this.c.balls = [new Ball(this.c.CTX, this.c.FIELD_X, this.c.FIELD_Y, modX, CONFIG.baseBallSize, this.c.levelBallSpeed, CONFIG.baseBallPower, PALETTE.baseBallFillStyle)];
             this.c.multiplier = this.c.levelMultiplier;
             this.c.lives -= 1;
             this.c.alertText = 'Ball lost.';

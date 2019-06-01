@@ -1,11 +1,11 @@
 export default class Paddle {
-    constructor(CTX, FIELD_X, FIELD_Y, width, speed, color) {
+    constructor(CTX, FIELD_X, FIELD_Y, modX, width, speed, color) {
         this.CTX = CTX;
         this.FIELD_X = FIELD_X;
         this.shape = 'rectangle';
         this.size = {
             x: width,
-            y: 10
+            y: 10 * modX
         };
         this.position = {
             x: (FIELD_X - this.size.x) / 2,

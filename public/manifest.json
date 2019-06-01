@@ -1,0 +1,14 @@
+{
+    "short_name": "Breakout! v2",
+    "name": "Breakout! game v2",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "16x16",
+            "type": "image/x-icon"
+        }
+    ],
+    "start_url": "./index.html",
+    "display": "browser",
+    "orientation": "landscape"
+}

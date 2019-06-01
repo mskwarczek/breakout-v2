@@ -10,10 +10,13 @@ const Instructions = () => {
                 <h2>Instructions</h2>
             </div>
             <div className='content'>
+                <p>
+                    It is highly recommended to play Breakout in fullscreen landscape mode.
+                </p>
                 { isTouchDevice()
                     ? <p>
                         Tap left / right side of your screen to move paddle left and right.<br />
-                        Click START / PAUSE button to start / pause the game.</p>
+                        Tap screen with two fingers at the same time to start / pause the game.</p>
                     : <p>
                         Use arrow keys to move paddle left and right.<br />
                         Press spacebar to start / pause the game.</p>
@@ -23,7 +26,7 @@ const Instructions = () => {
                     YELLOW bricks give extra points.
                 </p>
                 <p>
-                    From some bricks you may see coloured balls falling down.<br />
+                    You may see coloured balls falling down from destroyed bricks.<br />
                     Avoid RED ones (power-downs).<br />
                     Collect GREEN (power-ups) and YELLOW ones (points multipliers).
                 </p>

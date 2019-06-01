@@ -1,8 +1,12 @@
+import { getWindowSize } from '../common/tools';
+
+export const modX = getWindowSize().width / 1300;
+
 export const CONFIG = {
-    basePaddleWidth: 80,
-    basePaddleSpeed: 8,
-    baseBallSize: 10,
-    baseBallSpeed: 3,
+    basePaddleWidth: 80 * modX,
+    basePaddleSpeed: 8 * modX,
+    baseBallSize: 10 * modX,
+    baseBallSpeed: 3 * modX,
     baseBallPower: 10,
     baseLives: 3,
     baseMultiplier: 1,

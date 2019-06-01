@@ -1,10 +1,10 @@
 export default class Ball {
-    constructor(CTX, FIELD_X, FIELD_Y, size, speed, power, color, positionX) {
+    constructor(CTX, FIELD_X, FIELD_Y, modX, size, speed, power, color, positionX) {
         this.CTX = CTX;
         this.shape = 'circle';
         this.position = {
             x: positionX || FIELD_X / 2,
-            y: FIELD_Y - 20
+            y: FIELD_Y - (20 * modX)
         };
         this.size = size;
         this.speed = {
