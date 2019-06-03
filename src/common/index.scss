@@ -29,6 +29,7 @@ a {
     border: 1px solid $color-link;
     border-radius: 50px;
     background-color: $color-link;
+    -webkit-transition: .3s ease-out;
     transition: .3s ease-out;
 
     &:hover {
@@ -68,6 +69,7 @@ h1, h2, h3, h4, p {
     line-height: 300%;
     border: 1px solid $color-link;
     border-radius: 50px;
+    -webkit-transition: .3s ease-out;
     transition: .3s ease-out;
 
     &:hover {
@@ -79,10 +81,15 @@ h1, h2, h3, h4, p {
 // Game view
 .game-container {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
 
     .canvas-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
     
         canvas {
             display: block;
@@ -93,10 +100,19 @@ h1, h2, h3, h4, p {
 // Options view
 .radio-label {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     line-height: 300%;
 
     .radio-button {

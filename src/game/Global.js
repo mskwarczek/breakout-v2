@@ -1,12 +1,8 @@
-import { getHigherDimension } from '../common/tools';
-
-export const modX = getHigherDimension() / 1300;
-
 export const CONFIG = {
-    basePaddleWidth: 80 * modX,
-    basePaddleSpeed: 8 * modX,
-    baseBallSize: 10 * modX,
-    baseBallSpeed: 3 * modX,
+    basePaddleWidth: 80,
+    basePaddleSpeed: 8,
+    baseBallSize: 10,
+    baseBallSpeed: 3,
     baseBallPower: 10,
     baseLives: 3,
     baseMultiplier: 1,

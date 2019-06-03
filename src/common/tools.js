@@ -16,8 +16,3 @@ export const getWindowSize = () => {
     return {width, height};
 };
 
-export const getHigherDimension = () => {
-    return getWindowSize().width > getWindowSize().height
-        ? getWindowSize().width
-        : getWindowSize().height;
-};

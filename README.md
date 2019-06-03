@@ -1,5 +1,7 @@
 # Breakout!
 
+[See it online](http://www.breakout2.mskwarczek.pl)
+
 This is a second version of my [Breakout! game](https://github.com/mskwarczek/breakout-game).<br>
 Frontend is made with React.js, backend with Express. Core game files are made with pure JS without additional frameworks.
 
