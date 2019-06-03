@@ -38,11 +38,11 @@ class Options extends React.Component {
                 </div>
                 <div className='content'>
                     <form onSubmit={this.handleSubmit}>
-                        <label>Game mode:<br />
-                            <input type='radio' name='gameMode' onChange={this.handleChange} value='normal' checked={gameMode === 'normal' ? true : false} />Normal<br />
-                            <input type='radio' name='gameMode' onChange={this.handleChange} value='hard' checked={gameMode === 'hard' ? true : false} />Hard
-                        </label><br />
-                        <button type='submit'><h4>Save</h4></button>
+                        <h4>Game mode:</h4>
+                            <label className='radio-label'><input className='radio-button' type='radio' name='gameMode' onChange={this.handleChange} value='normal' checked={gameMode === 'normal' ? true : false} />Normal</label>
+                            <label className='radio-label'><input className='radio-button' type='radio' name='gameMode' onChange={this.handleChange} value='hard' checked={gameMode === 'hard' ? true : false} />Hard
+                        </label>
+                        <button className='button-submit' type='submit'><h4>Save</h4></button>
                     </form>
                 </div>
                 <div className='buttons'>

@@ -1,18 +1,40 @@
+// Imports
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
+
+// Variables
+$color-bg: #BDBDBD;
+$color-bg-app: rgba(255, 255, 255, .8);
+$color-text: #000;
+$color-link: #00C75D;
+$color-active: #C75D00;
+
 // Global settings
 body {
     margin: 0;
-    background-color: #888;
+    background-color: $color-bg;
     background-image: url('../img/wall.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    font-family: 'Montserrat', sans-serif;
+    color: $color-text;
 }
 
 a {
     display: block;
     max-width: 300px;
-    margin: 0 auto;
+    margin: 5px auto;
     text-decoration: none;
     color: inherit;
+    line-height: 300%;
+    border: 1px solid $color-link;
+    border-radius: 50px;
+    background-color: $color-link;
+    transition: .3s ease-out;
+
+    &:hover {
+        background-color: $color-active;
+        border-color: $color-active;
+    }
 }
 
 h1, h2, h3, h4, p {
@@ -25,7 +47,7 @@ h1, h2, h3, h4, p {
     min-height: 100vh;
     margin: 0 auto;
     text-align: center;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: $color-bg-app;
 }
 
 .main-header, .header, .content, .buttons {
@@ -34,6 +56,24 @@ h1, h2, h3, h4, p {
 
 .main-header {
     padding-top: 20px;
+}
+
+.button-submit {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    margin: 5px auto;
+    background-color: $color-link;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 300%;
+    border: 1px solid $color-link;
+    border-radius: 50px;
+    transition: .3s ease-out;
+
+    &:hover {
+        background-color: $color-active;
+        border-color: $color-active;
+    }
 }
 
 // Game view
@@ -47,5 +87,35 @@ h1, h2, h3, h4, p {
         canvas {
             display: block;
         }
+    }
+}
+
+// Options view
+.radio-label {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    line-height: 300%;
+
+    .radio-button {
+        height: 25px;
+        width: 25px;
+        margin: 0 3px 0;
+    }
+}
+
+// Gamoeover view
+.input-name {
+    margin: 10px 0;
+    border: none;
+    border-bottom: 2px solid $color-link;
+    font-family: 'Montserrat', sans-serif;
+    background-color: transparent;
+
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid $color-active;
     }
 }

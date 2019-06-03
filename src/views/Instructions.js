@@ -32,7 +32,7 @@ const Instructions = () => {
                         <rect x='135' y='5' width='60' height='15' fill='yellow' />
                     </svg>
                     <p>
-                        BLUE bricks are standard ones<br />
+                        BLUE bricks are standard ones.<br />
                         GREY bricks may need several hits to break.<br />
                         YELLOW bricks give extra points.<br />
                         On each level bricks are generated randomly.

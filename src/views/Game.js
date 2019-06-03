@@ -6,7 +6,8 @@ import { getWindowSize } from '../common/tools';
 import { setPlayerScore } from '../common/reducers/playerActions.js';
 
 const mapStateToProps = state => ({
-    appState: state.playerReducer
+    player: state.playerReducer,
+    options: state.optionsReducer
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -38,7 +39,7 @@ class Game extends React.Component {
         this.resizeHandler();
         return (
             <div className='game-container'>
-                <Breakout goToGameover={this.goToGameover} gameMode={this.props.appState.gameMode}/>
+                <Breakout goToGameover={this.goToGameover} gameMode={this.props.options.gameMode}/>
             </div>
         );
     };
