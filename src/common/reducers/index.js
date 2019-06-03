@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import appStateReducer from './appStateReducer';
+import playerReducer from './playerReducer';
+import optionsReducer from './optionsReducer';
 
 const reducers = combineReducers({
-    appStateReducer
+    playerReducer,
+    optionsReducer
 });
 
 export default reducers;

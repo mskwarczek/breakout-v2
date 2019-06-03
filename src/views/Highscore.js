@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { generateUID } from '../common/tools';
 
 const mapStateToProps = state => ({
-    player: state.appStateReducer
+    player: state.playerReducer
 });
 
 class Highscore extends React.Component {

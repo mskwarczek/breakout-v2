@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { setGameMode } from '../common/reducers/appStateActions.js';
+import { setGameMode } from '../common/reducers/optionsActions.js';
 
 const mapStateToProps = state => ({
-    appState: state.appStateReducer
+    appState: state.optionsReducer
 });
 
 const mapDispatchToProps = dispatch => ({

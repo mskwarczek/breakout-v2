@@ -1,12 +1,11 @@
 import deepFreeze from 'deep-freeze';
 
-import { SET_PLAYER_NAME, SET_PLAYER_SCORE, SET_GAME_MODE } from './appStateActions';
+import { SET_PLAYER_NAME, SET_PLAYER_SCORE } from './playerActions';
 
 const initialState = {
     playerName: null,
     playerTopLevel: null,
-    playerScore: null,
-    gameMode: 'normal'
+    playerScore: null
 };
 
 const appStateReducer = (state = initialState, action) => {
@@ -16,8 +15,6 @@ const appStateReducer = (state = initialState, action) => {
             return {...state, playerName: action.payload.playerName};
         case SET_PLAYER_SCORE:
             return {...state, playerTopLevel: action.payload.level, playerScore: action.payload.score};
-        case SET_GAME_MODE:
-            return {...state, gameMode: action.payload.gameMode};
         default: return state;
     };
 };

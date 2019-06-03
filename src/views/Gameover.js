@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { setPlayerName } from '../common/reducers/appStateActions.js';
+import { setPlayerName } from '../common/reducers/playerActions.js';
 
 const mapStateToProps = state => ({
-    player: state.appStateReducer
+    player: state.playerReducer
 });
 
 const mapDispatchToProps = dispatch => ({

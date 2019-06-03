@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import Breakout from '../game/Breakout';
 import { getWindowSize } from '../common/tools';
-import { setPlayerScore } from '../common/reducers/appStateActions.js';
+import { setPlayerScore } from '../common/reducers/playerActions.js';
 
 const mapStateToProps = state => ({
-    appState: state.appStateReducer
+    appState: state.playerReducer
 });
 
 const mapDispatchToProps = dispatch => ({
